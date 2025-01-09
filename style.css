@@ -79,7 +79,7 @@ html {
     
     .login-input>* {
         transform: translateX(1.5%);
-        width: 400px;
+        width:95%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -89,6 +89,7 @@ html {
     input {
         height: 40px;
         border: none;
+        border-radius: none;
         border-bottom: 1px solid blue;
     }
     
@@ -134,7 +135,7 @@ html {
     }
 
     .register-button>* {
-        width: 90%;
+        width: 95%;
         height: 50px;
         border-radius: 100px;
         border: none;
