@@ -1,11 +1,8 @@
-live// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Importeer Firebase en PubNub
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase Configuratie
 const firebaseConfig = {
   apiKey: "AIzaSyAIpUdHpSEk8ahMIO59T-BAx7n5_BcRYW4",
   authDomain: "printer-aid.firebaseapp.com",
@@ -14,51 +11,55 @@ const firebaseConfig = {
   storageBucket: "printer-aid.firebasestorage.app",
   messagingSenderId: "636113573034",
   appId: "1:636113573034:web:1476a0e2c26c595232acd3",
-  measurementId: "G-BFZTJTGYRC"
+  measurementId: "G-BFZTJTGYRC",
 };
 
-//initialize database
-
+// Initialiseer Firebase
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const db = getFirestore(app);
 
-// Elementen ophalen
-const emailInput = document.getElementById('email');
-const nameInput = document.getElementById('namefirst');
-const surnameInput = document.getElementById('namelast');
-const wantsEmailCheckbox = document.getElementById('wantsEmail');
-const submitButton = document.getElementById('submitButton');
+// PubNub Configuratie (gebruik een unieke UUID)
+const pubnub = new PubNub({
+  publishKey: "pub-c-c99cf8bb-3a00-4f2c-a061-2f58c92b61ef",
+  subscribeKey: "sub-c-83e02d99-84e9-4b1a-afed-b953fe0c2141",
+  uuid: `client-${Date.now()}`, // Gebruik een unieke identifier
+});
 
+// Eventlistener voor de registratieknop
+document.getElementById("submitButton").addEventListener("click", async function () {
+  const email = document.getElementById("email").value;
+  const namefirst = document.getElementById("namefirst").value;
+  const namelast = document.getElementById("namelast").value;
+  const wantsEmail = document.getElementById("wantsEmail").checked;
 
+  try {
+    // Voeg gegevens toe aan Firestore
+    const docRef = await addDoc(collection(db, "prints"), {
+      email: email,
+      name: namefirst,
+      surname: namelast,
+      wantsEmail: wantsEmail,
+      date: new Date().toISOString(),
+      status: "",
+      printer: "",
+    });
+    alert("Gegevens succesvol verzonden!");
 
-// Evenementenlistener voor de knop
-document.getElementById("submitButton").addEventListener("click", (e) => {
-  console.log('Button clicked');
-  e.preventDefault(); // Voorkom standaard herladen van de pagina
-
-  // Waarden ophalen
-  const email = emailInput.value;
-  const name = nameInput.value;
-  const surname = surnameInput.value;
-  const wantsEmail = wantsEmailCheckbox.checked;
-
-  // Data naar Firebase sturen
-  const usersRef = ref(database, 'prints');
-  push(usersRef, {
-    email: email,
-    name: name,
-    surname: surname,
-    wantsEmail: wantsEmail
-  })
-  .then(() => {
-    alert('Gegevens succesvol verzonden!');
-    // Optioneel: velden resetten
-    emailInput.value = '';
-    nameInput.value = '';
-    surnameInput.value = '';
-    wantsEmailCheckbox.checked = false;
-  })
-  .catch((error) => {
-    console.error('Fout bij verzenden:', error);
-  });
+    // Verstuur bericht naar PubNub
+    pubnub.publish(
+      {
+        channel: "prints",
+        message: { text: "start_detecting" },
+      },
+      function (status, response) {
+        if (status.error) {
+          console.error("Fout bij PubNub:", status);
+        } else {
+          console.log("Bericht succesvol verzonden naar PubNub:", response);
+        }
+      }
+    );
+  } catch (e) {
+    console.error("Fout bij verzenden naar Firestore:", e);
+  }
 });
