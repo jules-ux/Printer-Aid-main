@@ -5,8 +5,7 @@ html {
     padding: 0;
     user-select: none;
     overflow: hidden;
-    background: rgb(91, 85, 193);
-    background: linear-gradient(180deg, rgba(91, 85, 193, 1) 0%, rgba(63, 63, 210, 1) 42%, rgba(0, 212, 255, 1) 100%);
+    background-color: rgb(156, 156, 231);
     scroll-behavior: smooth;
 }
 
@@ -22,14 +21,16 @@ span{
 @media (max-width: 768px) {
 
     nav {
-        overflow: hidden;
+        position: absolute;
+        top: calc(50% - 33vh); /* 50% van de hoogte van het scherm min de helft van de hoogte van de login-body */
+        left: 50%;
+        transform: translateX(-50%); /* Horizontaal centreren */
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 30px;
-        margin-top: 10%;
+        gap: 20px;
     }
+    
 
     .information{
         display: flex;
@@ -49,12 +50,15 @@ span{
     }
 
     .login-body {
-        margin-top: 10%;
+        position: absolute;
+        bottom: 0;
+        margin-top: 20%;
         background-color: white;
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
         margin-left: 10%;
         width: 100%;
+        height: 450px;
         padding-right: 1px;
         transform: translateX(-10%);
 
