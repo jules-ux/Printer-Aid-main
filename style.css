@@ -9,10 +9,6 @@ html {
     scroll-behavior: smooth;
 }
 
-.login-body{
-    height: 100vmax;
-}
-
 span{
     color: blueviolet;
     font-size: 1.3rem;
@@ -116,6 +112,8 @@ span{
         height: 40px;
         border: none;
         border-radius: none !important;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
         border-bottom: 1px solid blue;
     }
 
@@ -256,6 +254,8 @@ span{
         border-radius: none;
         border-bottom: 1px solid blue;
         text-indent: 3%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     input:focus,

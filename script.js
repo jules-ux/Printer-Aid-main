@@ -31,17 +31,25 @@ document.getElementById("submitButton").addEventListener("click", async function
   const namefirst = document.getElementById("namefirst").value;
   const namelast = document.getElementById("namelast").value;
   const wantsEmail = document.getElementById("wantsEmail").checked;
+  const date = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   try {
     // Voeg gegevens toe aan Firestore
     const docRef = await addDoc(collection(db, "prints"), {
       email: email,
-      name: namefirst,
-      surname: namelast,
+      namefirst: namefirst,
+      namelast: namelast,
       wantsEmail: wantsEmail,
-      date: new Date().toISOString(),
-      status: "",
+      date: date,
+      status: "pending",
       printer: "",
+      timestart: "",
+      timeend: "",
+      timeprint: "",
     });
     alert("Gegevens succesvol verzonden!");
 
