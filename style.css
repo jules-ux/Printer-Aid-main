@@ -107,7 +107,7 @@ span{
     input {
         height: 40px;
         border: none;
-        border-radius: none;
+        border-radius: none !important;
         border-bottom: 1px solid blue;
     }
 
