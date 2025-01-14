@@ -115,19 +115,17 @@ span{
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         border-bottom: 1px solid blue;
-    }
-
-    input::placeholder {
-        font-size: 0.85rem;
-        position: relative;
-        left: 4%;
-    }
-
-    input {
         width: 90%;
-        /* Breder op mobiele apparaten */
         border-radius: 0px;
         font-size: 16px;
+        text-indent: 12px;
+    }
+
+
+    input:focus,
+    input:active {
+        border: none;
+        color: none;
     }
 
     .login-button {
