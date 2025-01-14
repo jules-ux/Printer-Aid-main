@@ -126,13 +126,14 @@ span{
     input {
         width: 90%;
         /* Breder op mobiele apparaten */
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .login-button {
         width: 80%;
         /* Knop past beter op mobiel */
         font-size: 14px;
+        border-radius: 0;
     }
 
     .checkbox {
@@ -140,6 +141,7 @@ span{
         flex-direction: row;
         gap: 10px;
         position: relative;
+        border-radius: 0;
         
     }
 
