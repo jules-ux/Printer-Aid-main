@@ -126,6 +126,7 @@ span{
     input {
         width: 90%;
         /* Breder op mobiele apparaten */
+        border-radius: 0px;
         font-size: 16px;
     }
 
@@ -141,13 +142,14 @@ span{
         flex-direction: row;
         gap: 10px;
         position: relative;
-        border-radius: 0;
+        border-radius: 0px;
         
     }
 
     .checkbox>*:first-child {
         width: fit-content;
         width: 20px;
+        border-radius: 0px;
     }
 
     .checkbox>*:last-child {
